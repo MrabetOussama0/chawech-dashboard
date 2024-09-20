@@ -1,5 +1,5 @@
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
-import SendEmail from "Pages/ForgotPassword/SendEmail";
+import ForgotPassword from "Pages/ForgotPassword/ForgotPassword";
 import LandingPage from "Pages/LandingPage";
 import Login from "Pages/Login";
 import { useMemo } from "react";
@@ -26,8 +26,8 @@ function App() {
           element={token ? <Navigate to="/" /> : <Login />}
         />
         <Route
-          path="/forgot-password/*"
-          element={token ? <Navigate to="/" /> : <SendEmail />}
+          path="/forgot-password"
+          element={token ? <Navigate to="/" /> : <ForgotPassword />}
         />
         <Route
           path="/"

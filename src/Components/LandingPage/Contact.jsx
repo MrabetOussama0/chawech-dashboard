@@ -1,6 +1,6 @@
 import { useTheme } from "@emotion/react";
 import { Box, Button, TextField, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import image from "Images/contact.jpg";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
@@ -92,7 +92,7 @@ const Contact = () => {
           fontWeight: "bold",
           fontSize: "2rem",
           textAlign: "left",
-          margin: "100px 10px 10px 10px",
+          margin: "60px 10px 10px 10px",
           alignSelf: "start",
         }}
       >

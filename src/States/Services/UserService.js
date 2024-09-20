@@ -3,6 +3,7 @@ import {
   generateOTPEndPoint,
   getUserEndPoint,
   resetPasswordEndPoint,
+  updatePasswordEndPoint,
   updateUserEndPoint,
   verifyOTPEndPoint,
 } from "Helpers/Constants";
@@ -58,6 +59,22 @@ const UserService = {
         password,
         sessionId,
       });
+    } catch (error) {
+      handleError(error);
+    }
+  },
+  updatePassword: async (oldPassword, newPassword) => {
+    try {
+      const token = getToken();
+      await axiosClient.put(
+        updatePasswordEndPoint,
+        { old_password: oldPassword, new_password: newPassword },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
     } catch (error) {
       handleError(error);
     }

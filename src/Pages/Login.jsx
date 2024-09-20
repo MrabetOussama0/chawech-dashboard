@@ -10,6 +10,7 @@ import { signIn } from "States/Actions/AuthActions";
 import { useNavigate } from "react-router";
 import login from "Images/login.png";
 import { toast } from "react-toastify";
+import logo from "Images/logo.png";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -48,8 +49,25 @@ const Login = () => {
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
+          position: "relative",
         }}
-      />
+      >
+        <Box
+          sx={{
+            height: "50px",
+            width: "50px",
+            backgroundImage: `url(${logo})`,
+            backgroundSize: "contain",
+            backgroundRepeat: "no-repeat",
+            borderRadius: "10px",
+            cursor: "pointer",
+            position: "absolute",
+            top: "20px",
+            left: "20px",
+          }}
+          onClick={() => navigate("/")}
+        />
+      </Box>
       <Box
         sx={{
           flex: "1",

@@ -1,6 +1,5 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import React from "react";
-import logo from "Images/logo.png";
 import { useTheme } from "@emotion/react";
 import NavBar from "./NavBar";
 import { LoginOutlined } from "@mui/icons-material";
@@ -16,24 +15,21 @@ function TopBar() {
         justifyContent: "space-around",
         alignItems: "center",
         bgcolor: theme.palette.secondary.main,
-        padding: "10px",
+        padding: "5px",
         position: "fixed",
         zIndex: "1",
       }}
     >
       {/* Logo */}
-      <Box
+      <Typography
         sx={{
-          height: "50px",
-          width: "50px",
-          backgroundImage: `url(${logo})`,
-          backgroundSize: "contain",
-          backgroundRepeat: "no-repeat",
-          borderRadius: "10px",
-          cursor: "pointer",
+          color: theme.palette.tertiary.main,
+          fontSize: "30px",
+          fontWeight: "600",
         }}
-        onClick={() => navigate("/")}
-      />
+      >
+        Chawech
+      </Typography>
       {/* Navigation */}
       <NavBar />
       {/* Login Button */}

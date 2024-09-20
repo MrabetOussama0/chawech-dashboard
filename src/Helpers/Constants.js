@@ -7,6 +7,7 @@ export const updateUserEndPoint = "/users/me/update-details";
 export const generateOTPEndPoint = "/users/generate-otp";
 export const verifyOTPEndPoint = "/users//verify-otp";
 export const resetPasswordEndPoint = "/users/reset-password";
+export const updatePasswordEndPoint = "/users/me/update-password";
 // Shops
 export const getShopsEndPoint = "/shops/get-details";
 export const getShopEndPoint = (shopId) => `/shops/${shopId}/get-details`;

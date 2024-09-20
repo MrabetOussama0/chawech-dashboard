@@ -21,7 +21,7 @@ const About = () => {
           fontWeight: "bold",
           fontSize: "2rem",
           textAlign: "left",
-          margin: "100px 10px 10px 10px",
+          margin: "60px 10px 10px 10px",
           alignSelf: "start",
         }}
       >

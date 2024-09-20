@@ -14,6 +14,9 @@ import {
   VERIFY_OTP_ERROR,
   VERIFY_OTP_SUCCESS,
   VERIFY_OTP,
+  UPDATE_PASSWORD,
+  UPDATE_PASSWORD_ERROR,
+  UPDATE_PASSWORD_SUCCESS,
 } from "States/Actions/UserActions";
 
 let initialState = {
@@ -22,6 +25,7 @@ let initialState = {
   generateOTPLoading: false,
   verifyOTPLoading: false,
   resetPasswordLoading: false,
+  updatePasswordLoading: false,
   user: null,
   error: null,
   sessionId: null,
@@ -37,12 +41,14 @@ const UserReducer = (state = initialState, action) => {
       };
     case GET_USER_SUCCESS:
       return {
+        ...state,
         getUserLoading: false,
         error: null,
         user: action.payload.user,
       };
     case GET_USER_ERROR:
       return {
+        ...state,
         getUserLoading: false,
         error: action.payload.message,
         user: null,
@@ -55,6 +61,7 @@ const UserReducer = (state = initialState, action) => {
       };
     case UPDATE_USER_SUCCESS:
       return {
+        ...state,
         updateUserLoading: false,
         error: null,
         user: action.payload.user,
@@ -73,11 +80,13 @@ const UserReducer = (state = initialState, action) => {
       };
     case GENERATE_OTP_SUCCESS:
       return {
+        ...state,
         generateOTPLoading: false,
         error: null,
       };
     case GENERATE_OTP_ERROR:
       return {
+        ...state,
         generateOTPLoading: false,
         error: action.payload.message,
       };
@@ -89,12 +98,14 @@ const UserReducer = (state = initialState, action) => {
       };
     case VERIFY_OTP_SUCCESS:
       return {
+        ...state,
         verifyOTPLoading: false,
         error: null,
         sessionId: action.payload.sessionId,
       };
     case VERIFY_OTP_ERROR:
       return {
+        ...state,
         verifyOTPLoading: false,
         error: action.payload.message,
       };
@@ -106,13 +117,33 @@ const UserReducer = (state = initialState, action) => {
       };
     case RESET_PASSWORD_SUCCESS:
       return {
+        ...state,
         resetPasswordLoading: false,
         error: null,
         sessionId: null,
       };
     case RESET_PASSWORD_ERROR:
       return {
+        ...state,
         resetPasswordLoading: false,
+        error: action.payload.message,
+      };
+    case UPDATE_PASSWORD:
+      return {
+        ...state,
+        updatePasswordLoading: true,
+        error: null,
+      };
+    case UPDATE_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        updatePasswordLoading: false,
+        error: null,
+      };
+    case UPDATE_PASSWORD_ERROR:
+      return {
+        ...state,
+        updatePasswordLoading: false,
         error: action.payload.message,
       };
     default:
