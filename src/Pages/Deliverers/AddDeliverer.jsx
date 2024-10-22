@@ -1,7 +1,7 @@
-import { useTheme } from "@emotion/react";
 import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import AddSuccessPopUp from "Components/AddSuccessPopUp";
+import CustomDropDown from "Components/CustomDropDown";
 import CustomField from "Components/CustomField";
 import LoadingOverlay from "Components/LoadingOverlay";
 import LoadingScreen from "Components/LoadingScreen";
@@ -11,50 +11,55 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
+import * as Yup from "yup";
 import {
-  addManager,
-  getManager,
-  updateManager,
-} from "States/Actions/ManagersActions";
+  addDeliverer,
+  getDeliverer,
+  updateDeliverer,
+} from "States/Actions/DeliverersActions";
+import { getRegions } from "States/Actions/RegionsActions";
 
-const AddManager = () => {
+const AddDeliverer = () => {
   const dispatch = useDispatch();
-  const { managerId } = useParams();
+  const { delivererId } = useParams();
   const [addSuccessOpen, setAddSuccessOpen] = useState(false);
   const [updateSuccessOpen, setUpdateSuccessOpen] = useState(false);
   const {
-    getManagerLoading,
-    manager,
-    addManagerLoading,
-    updateManagerLoading,
-  } = useSelector((state) => state.managers);
+    getDelivererLoading,
+    deliverer,
+    addDelivererLoading,
+    updateDelivererLoading,
+  } = useSelector((state) => state.deliverers);
+  const { regions, getRegionsLoading } = useSelector((state) => state.regions);
   const navigate = useNavigate();
   useEffect(() => {
-    const getManagerData = async () => {
+    const getDelivererData = async () => {
       try {
-        if (managerId) {
-          await dispatch(getManager(managerId));
+        await dispatch(getRegions());
+        if (delivererId) {
+          await dispatch(getDeliverer(delivererId));
         }
       } catch (error) {
         toast.error(error.message);
       }
     };
-    getManagerData();
+    getDelivererData();
   }, [dispatch]);
   const onSubmit = async (values) => {
     try {
-      const manager = {
+      const deliverer = {
         first_name: values.first_name,
         last_name: values.last_name,
         email: values.email,
         password: values.password,
         phone: values.phone,
+        region: values.region,
       };
-      if (managerId) {
-        await dispatch(updateManager(managerId, manager));
+      if (delivererId) {
+        await dispatch(updateDeliverer(delivererId, deliverer));
         setUpdateSuccessOpen(true);
       } else {
-        await dispatch(addManager(manager));
+        await dispatch(addDeliverer(deliverer));
         setAddSuccessOpen(true);
       }
     } catch (error) {
@@ -66,15 +71,29 @@ const AddManager = () => {
       enableReinitialize={true}
       onSubmit={onSubmit}
       initialValues={{
-        first_name: managerId && manager.manager.first_name || "",
-        last_name: managerId && manager.manager.last_name || "",
-        email: managerId && manager.manager.email || "",
-        phone: managerId && manager.manager.phone || "",
+        first_name: (delivererId && deliverer?.first_name) || "",
+        last_name: (delivererId && deliverer?.last_name) || "",
+        email: (delivererId && deliverer?.email) || "",
+        phone: (delivererId && deliverer?.phone) || "",
+        region: (delivererId && deliverer?.region) || "",
       }}
-      // validationSchema={shopSchema}
+      validationSchema={Yup.object().shape({
+        first_name: Yup.string().required("Prénom est requis"),
+        last_name: Yup.string().required("Nom est requis"),
+        email: Yup.string()
+          .email("Email est invalide")
+          .required("Email est requis"),
+        phone: Yup.string().required("Téléphone est requis"),
+        region: Yup.string().required("Region est requise"),
+        password: Yup.string().when("email", {
+          is: (delivererId) => !delivererId || delivererId === "",
+          then: () => Yup.string().required("Mot de passe est requis"),
+          otherwise: () => Yup.string().notRequired(),
+        }),
+      })}
       validateOnMount={true}
     >
-      {({ values, handleSubmit, setFieldValue }) => (
+      {({ values }) => (
         <Box
           className="content"
           sx={{
@@ -90,7 +109,7 @@ const AddManager = () => {
             },
           }}
         >
-          {getManagerLoading ? (
+          {getDelivererLoading ? (
             <LoadingScreen />
           ) : (
             <>
@@ -148,7 +167,7 @@ const AddManager = () => {
                       }}
                       type="submit"
                     >
-                      {managerId ? "Modifier" : "Ajouter"}
+                      {delivererId ? "Modifier" : "Ajouter"}
                     </Button>
                   </Box>
                 </Box>
@@ -185,8 +204,8 @@ const AddManager = () => {
                   </Box>
                   <Box flex="1">
                     <CustomField
-                      value={managerId ? "********" : values.password}
-                      isDisabled={!!managerId}
+                      value={delivererId ? "********" : values.password}
+                      isDisabled={!!delivererId}
                       name="password"
                       type="text"
                       title="Mot de passe"
@@ -198,6 +217,24 @@ const AddManager = () => {
                       name="phone"
                       type="phone"
                     />
+                    <Box>
+                      <Typography
+                        height="15px"
+                        variant="h6"
+                        color={"grey"}
+                        mb=".6rem"
+                      >
+                        Region
+                      </Typography>
+                      <CustomDropDown
+                        getItems={(item) =>
+                          regions.find((region) => region._id === item).name
+                        }
+                        items={regions.map((region) => region._id)}
+                        name={"region"}
+                        value={values.region}
+                      />
+                    </Box>
                   </Box>
                 </Box>
               </Form>
@@ -206,7 +243,7 @@ const AddManager = () => {
                   title={"Ajout de traiteur confirmé"}
                   onClick={() => {
                     setAddSuccessOpen(false);
-                    navigate("/managers");
+                    navigate("/deliverers");
                   }}
                 />
               </PopUp>
@@ -215,12 +252,12 @@ const AddManager = () => {
                   title={"Modification de traiteur confirmée"}
                   onClick={() => {
                     setUpdateSuccessOpen(false);
-                    navigate("/managers");
+                    navigate("/deliverers");
                   }}
                 />
               </PopUp>
               <LoadingOverlay
-                open={addManagerLoading || updateManagerLoading}
+                open={addDelivererLoading || updateDelivererLoading}
               />
             </>
           )}
@@ -230,4 +267,4 @@ const AddManager = () => {
   );
 };
 
-export default AddManager;
+export default AddDeliverer;

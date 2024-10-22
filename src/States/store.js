@@ -9,6 +9,8 @@ import ManagersReducer from "./Reducers/ManagersReducer";
 import HomeReducer from "./Reducers/HomeReducer";
 import CategoriesReducer from "./Reducers/CategoriesReducer";
 import AlertsReducer from "./Reducers/AlertReducer";
+import DeliverersReducer from "./Reducers/DeliverersReducer";
+import RegionsReducer from "./Reducers/RegionsReducer";
 
 const middleware = [thunk];
 
@@ -20,6 +22,8 @@ const rootReducer = combineReducers({
   home: HomeReducer,
   categories: CategoriesReducer,
   alerts: AlertsReducer,
+  deliverers: DeliverersReducer,
+  regions: RegionsReducer,
 });
 
 const store = configureStore({

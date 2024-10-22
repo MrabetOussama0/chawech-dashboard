@@ -2,7 +2,6 @@ import React from "react";
 import { Box, IconButton, Typography } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import { Apple, Google } from "@mui/icons-material";
-import landing from "Images/landing.jpg";
 
 function Welcome() {
   const theme = useTheme();
@@ -10,10 +9,6 @@ function Welcome() {
     <Box
       id="welcome"
       sx={{
-        backgroundImage: `url(${landing})`,
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
         height: "100vh",
         width: "100%",
         display: "flex",
@@ -30,7 +25,7 @@ function Welcome() {
           fontWeight: "600",
         }}
       >
-        Chawech
+        Sarbini
       </Typography>
       <Typography
         sx={{
@@ -44,7 +39,7 @@ function Welcome() {
       </Typography>
       <Typography
         sx={{
-          color: theme.palette.primary.main,
+          color: theme.palette.secondary.main,
           fontSize: "20px",
           fontWeight: "600",
           textAlign: "center",

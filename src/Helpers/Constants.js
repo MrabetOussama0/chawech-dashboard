@@ -9,7 +9,7 @@ export const verifyOTPEndPoint = "/users//verify-otp";
 export const resetPasswordEndPoint = "/users/reset-password";
 export const updatePasswordEndPoint = "/users/me/update-password";
 // Shops
-export const getShopsEndPoint = "/shops/get-details";
+export const getShopsEndPoint = "/shops/get-details/admin";
 export const getShopEndPoint = (shopId) => `/shops/${shopId}/get-details`;
 export const addShopEndPoint = "/shops/create-shop";
 export const deleteShopEndPoint = (shopId) => `/shops/${shopId}/delete-shop`;
@@ -23,6 +23,15 @@ export const deleteManagerEndPoint = (managerId) =>
   `/users/${managerId}/delete-user`;
 export const updateManagerEndPoint = (managerId) =>
   `/users/${managerId}/update-details`;
+// Deliverers
+export const getDeliverersEndPoint = "/deliverers/get-details";
+export const getDelivererEndPoint = (delivererId) =>
+  `/deliverers/${delivererId}/get-details`;
+export const addDelivererEndPoint = "/deliverers/create-deliverer";
+export const deleteDelivererEndPoint = (delivererId) =>
+  `/deliverers/${delivererId}/delete-deliverer`;
+export const updateDelivererEndPoint = (delivererId) =>
+  `/deliverers/${delivererId}/update-details`;
 // Home
 export const getSuperAdminHomeDataEndPoint = "/home/get-super-admin-details";
 // Categories
@@ -41,3 +50,12 @@ export const deleteAlertEndPoint = (alertId) =>
 export const getAlertEndPoint = (alertId) => `/alerts/${alertId}/get-alert`;
 export const getAlertsEndPoint = "/alerts/get-details";
 export const updateAlertEndPoint = "/alerts/update-details";
+// Regions
+export const getRegionsEndPoint = "/regions/get-details";
+export const getRegionEndPoint = (regionId) =>
+  `/regions/${regionId}/get-details`;
+export const addRegionEndPoint = "/regions/create-region";
+export const deleteRegionEndPoint = (regionId) =>
+  `/regions/${regionId}/delete-region`;
+export const updateRegionEndPoint = (regionId) =>
+  `/regions/${regionId}/update-details`;

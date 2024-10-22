@@ -63,7 +63,7 @@ const Contact = () => {
       link: "https://goo.gl/maps/ttt",
     },
   ];
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values, { resetForm }) => {
     try {
       const alert = {
         email: values.email,
@@ -71,6 +71,7 @@ const Contact = () => {
         description: values.description,
       };
       await dispatch(addAlert(alert));
+      resetForm();
       setAddSuccessOpen(true);
     } catch (error) {
       toast.error(error.message);
@@ -149,10 +150,10 @@ const Contact = () => {
                   .email("Adresse email invalide")
                   .required("Champs requis"),
                 subject: Yup.string()
-                  .min(3, "Doit contenir au moins 3 caractères")
+                  .min(1, "Doit contenir au moins 3 caractères")
                   .required("Champs requis"),
                 description: Yup.string()
-                  .min(10, "Doit contenir au moins 10 caractères")
+                  .min(1, "Doit contenir au moins 10 caractères")
                   .required("Champs requis"),
               })}
               onSubmit={handleSubmit}
@@ -189,7 +190,7 @@ const Contact = () => {
                     <Button
                       sx={{
                         backgroundColor: theme.palette.primary.main,
-                        color: theme.palette.tertiary.main,
+                        color: theme.palette.secondary.main,
                         width: "147px",
                         height: "40px",
                         border: "1px solid",
@@ -202,7 +203,7 @@ const Contact = () => {
                       startIcon={
                         <ContactSupport
                           sx={{
-                            color: theme.palette.tertiary.main,
+                            color: theme.palette.secondary.main,
                             fontSize: "20px",
                             mr: "15px",
                           }}

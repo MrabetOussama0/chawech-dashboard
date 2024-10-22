@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 import { getManagers } from "States/Actions/ManagersActions";
+import { getRegions } from "States/Actions/RegionsActions";
 import { addShop, getShop, updateShop } from "States/Actions/ShopsActions";
 import * as Yup from "yup";
 
@@ -28,6 +29,7 @@ const AddShop = () => {
   const { managers, getManagersLoading, error } = useSelector(
     (state) => state.managers
   );
+  const { regions, getRegionsLoading } = useSelector((state) => state.regions);
   const [image, setImage] = useState(null);
   const navigate = useNavigate();
   const shopsTypes = [
@@ -48,14 +50,18 @@ const AddShop = () => {
     return "Autre";
   };
   useEffect(() => {
-    try {
-      if (shopId) {
-        dispatch(getShop(shopId));
+    const getManagersData = async () => {
+      try {
+        if (shopId) {
+          await dispatch(getShop(shopId));
+        }
+        await dispatch(getRegions());
+        await dispatch(getManagers());
+      } catch (error) {
+        toast.error(error.message);
       }
-      dispatch(getManagers());
-    } catch (error) {
-      toast.error(error.message);
-    }
+    };
+    getManagersData();
   }, [dispatch]);
   const onSubmit = async (values) => {
     try {
@@ -69,6 +75,7 @@ const AddShop = () => {
         address: values.address,
         type: values.type,
         image: image,
+        region: values.region,
       };
       if (shopId) {
         await dispatch(updateShop(shopId, shop));
@@ -99,6 +106,7 @@ const AddShop = () => {
                 manager: shop?.manager || managers[0]?.manager?._id || "",
                 address: shop?.address || "",
                 type: shop?.type || "restaurant",
+                region: shop?.region || regions[0]?._id || "",
               }}
               validationSchema={Yup.object({
                 name: Yup.string().required("Champ obligatoire"),
@@ -212,18 +220,51 @@ const AddShop = () => {
                               multiline
                               rows={4}
                             />
-                            <CustomDropDown
-                              getItems={(item) =>
-                                `${
-                                  managers.find(
-                                    (elem) => elem.manager._id === item
-                                  ).manager.email
-                                }`
-                              }
-                              name="manager"
-                              value={values.manager}
-                              items={managers.map((item) => item.manager._id)}
-                            />
+                            <Box
+                              sx={{
+                                mb: "10px",
+                              }}
+                            >
+                              <Typography
+                                height="15px"
+                                variant="h6"
+                                color={theme.palette.grey[600]}
+                                mb=".6rem"
+                              >
+                                Gestionnaire
+                              </Typography>
+                              <CustomDropDown
+                                getItems={(item) =>
+                                  `${
+                                    managers.find(
+                                      (elem) => elem.manager._id === item
+                                    ).manager.email
+                                  }`
+                                }
+                                name="manager"
+                                value={values.manager}
+                                items={managers.map((item) => item.manager._id)}
+                              />
+                            </Box>
+                            <Box>
+                              <Typography
+                                height="15px"
+                                variant="h6"
+                                color={theme.palette.grey[600]}
+                                mb=".6rem"
+                              >
+                                Région
+                              </Typography>
+                              <CustomDropDown
+                                getItems={(item) =>
+                                  regions.find((region) => region._id === item)
+                                    .name
+                                }
+                                items={regions.map((region) => region._id)}
+                                name={"region"}
+                                value={values.region}
+                              />
+                            </Box>
                           </Box>
                           <Box flex="1">
                             <CustomField

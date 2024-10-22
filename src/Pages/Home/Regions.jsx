@@ -17,15 +17,14 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import {
-  addCategory,
-  deleteCategory,
-  getCategories,
-  updateCategory,
-} from "States/Actions/CategoriesActions";
+  addRegion,
+  deleteRegion,
+  getRegions,
+  updateRegion,
+} from "States/Actions/RegionsActions";
 
-function AddEditCategory({ handleSubmit, category }) {
-  const [name, setName] = useState(category?.name);
-  const [image, setImage] = useState(null);
+function AddEditRegion({ handleSubmit, region }) {
+  const [name, setName] = useState(region?.name);
 
   return (
     <Box
@@ -34,7 +33,7 @@ function AddEditCategory({ handleSubmit, category }) {
       }}
     >
       <Typography variant="h5" fontWeight={"bold"} color="primary">
-        {category ? "Modifier la catégorie" : "Ajouter une catégorie"}
+        {region ? "Modifier la region" : "Ajouter une region"}
       </Typography>
       <Box
         sx={{
@@ -55,7 +54,7 @@ function AddEditCategory({ handleSubmit, category }) {
           }}
         >
           <Typography variant="h6" fontWeight={"bold"} color="secondary">
-            Nom de la catégorie
+            Nom de la region
           </Typography>
           <TextField
             variant="outlined"
@@ -78,95 +77,6 @@ function AddEditCategory({ handleSubmit, category }) {
             }}
           />
         </Box>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "10px",
-          }}
-        >
-          <Typography variant="h6" fontWeight={"bold"} color="secondary">
-            Image de la catégorie
-          </Typography>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: "10px",
-            }}
-          >
-            <Builder
-              builder={() => {
-                if (image) {
-                  return (
-                    <img
-                      src={URL.createObjectURL(image)}
-                      alt="category"
-                      style={{
-                        height: "100px",
-                        width: "100px",
-                        borderRadius: "6px",
-                      }}
-                    />
-                  );
-                } else if (category) {
-                  return (
-                    <img
-                      src={process.env.REACT_APP_UPLOAD_URL + category.image}
-                      alt="category"
-                      style={{
-                        height: "100px",
-                        width: "100px",
-                        borderRadius: "6px",
-                      }}
-                    />
-                  );
-                } else {
-                  return (
-                    <img
-                      src="https://via.placeholder.com/150"
-                      alt="category"
-                      style={{
-                        height: "100px",
-                        width: "100px",
-                        borderRadius: "6px",
-                      }}
-                    />
-                  );
-                }
-              }}
-            />
-            <input
-              name="image"
-              type="file"
-              accept="image/*"
-              id="image"
-              onChange={(e) => setImage(e.target.files[0])}
-              style={{
-                display: "none",
-              }}
-            />
-            <Button
-              component="label"
-              htmlFor="image"
-              sx={{
-                width: "100%",
-                bgcolor: "#fff",
-                color: "#1E5EFF",
-                borderRadius: "6px",
-                padding: "10px",
-                fontSize: "14px",
-                fontWeight: "bold",
-                textTransform: "none",
-                border: "2px solid #1E5EFF",
-                textWrap: "nowrap",
-              }}
-            >
-              Choisir une image
-            </Button>
-          </Box>
-        </Box>
         <Button
           sx={{
             bgcolor: "#1E5EFF",
@@ -177,57 +87,54 @@ function AddEditCategory({ handleSubmit, category }) {
             fontWeight: "bold",
             textTransform: "none",
           }}
-          onClick={() => handleSubmit({ name, image })}
+          onClick={() => handleSubmit({ name })}
         >
-          {category ? "Modifier" : "Ajouter"}
+          {region ? "Modifier" : "Ajouter"}
         </Button>
       </Box>
     </Box>
   );
 }
 
-function Categories() {
-  const [selectedCategory, setSelectedCategory] = useState(null);
+function Regions() {
+  const [selectedRegion, setSelectedRegion] = useState(null);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [addEditOpen, setAddEditOpen] = useState(false);
   const [addSuccessOpen, setAddSuccessPopUp] = useState(false);
   const [updateSuccessOpen, setUpdateSuccessOpen] = useState(false);
   const [deleteSuccessOpen, setDeleteSuccessOpen] = useState(false);
   const {
-    categories,
+    regions,
     error,
-    addCategoryLoading,
-    udpateCategoryLoading,
-    deleteCategoryLoading,
-  } = useSelector((state) => state.categories);
+    addRegionLoading,
+    udpateRegionLoading,
+    deleteRegionLoading,
+  } = useSelector((state) => state.regions);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        await dispatch(getCategories());
-      } catch (error) {
-        toast.error(error.message);
-      }
-    }
-    fetchCategories();
-  }, [dispatch]);
-  const handleSubmit = async (category) => {
     try {
-      if (selectedCategory) {
-        await dispatch(updateCategory(selectedCategory._id, category));
+      dispatch(getRegions());
+    } catch (error) {
+      toast.error(error.message);
+    }
+  }, [dispatch]);
+  const handleSubmit = async (region) => {
+    try {
+      if (selectedRegion) {
+        await dispatch(updateRegion(selectedRegion._id, region));
         setUpdateSuccessOpen(true);
       } else {
-        await dispatch(addCategory(category));
+        await dispatch(addRegion(region));
         setAddSuccessPopUp(true);
       }
     } catch (error) {
       toast.error(error.message);
     }
   };
-  const handleDeleteCategory = async () => {
+  const handleDeleteRegion = async () => {
     try {
-      await dispatch(deleteCategory(selectedCategory._id));
+      await dispatch(deleteRegion(selectedRegion._id));
       setDeleteOpen(false);
     } catch (error) {
       toast.error(error.message);
@@ -241,7 +148,7 @@ function Categories() {
     >
       <Builder
         builder={() => {
-          if (categories) {
+          if (regions) {
             return (
               <Box
                 sx={{
@@ -257,7 +164,7 @@ function Categories() {
                   overflow: "auto",
                 }}
               >
-                {/* Categories */}
+                {/* Regions */}
                 <Box
                   sx={{
                     display: "flex",
@@ -267,11 +174,11 @@ function Categories() {
                   }}
                 >
                   <Typography variant="h5" fontWeight={"bold"} color="primary">
-                    Catégories
+                    Regions
                   </Typography>
                   <IconButton
                     onClick={() => {
-                      setSelectedCategory(null);
+                      setSelectedRegion(null);
                       setAddEditOpen(true);
                     }}
                   >
@@ -280,10 +187,10 @@ function Categories() {
                 </Box>
                 <Builder
                   builder={() => {
-                    if (categories.length === 0) {
+                    if (regions.length === 0) {
                       return (
                         <ErrorScreen
-                          text="Aucune catégorie trouvée"
+                          text="Aucune region trouvée"
                           sx={{ height: "50vh" }}
                         />
                       );
@@ -297,11 +204,11 @@ function Categories() {
                             borderColor: "#fff",
                           }}
                         >
-                          {categories.map((category) => (
+                          {regions.map((region) => (
                             <Box
-                              key={category._id}
+                              key={region._id}
                               sx={{
-                                height: "200px",
+                                height: "100px",
                                 bgcolor: "#fff",
                                 padding: "10px",
                                 display: "flex",
@@ -313,25 +220,12 @@ function Categories() {
                                 boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
                               }}
                             >
-                              <Box
-                                sx={{
-                                  backgroundImage: `url(${
-                                    process.env.REACT_APP_UPLOAD_URL +
-                                    category.image
-                                  })`,
-                                  backgroundSize: "cover",
-                                  backgroundPosition: "center",
-                                  height: "100%",
-                                  width: "100%",
-                                  borderRadius: "16px",
-                                }}
-                              />
                               <Typography
                                 variant="h6"
                                 fontWeight={"bold"}
                                 color="secondary"
                               >
-                                {category.name}
+                                {region.name}
                               </Typography>
                               <Box
                                 sx={{
@@ -354,7 +248,7 @@ function Categories() {
                                     textTransform: "none",
                                   }}
                                   onClick={() => {
-                                    setSelectedCategory(category);
+                                    setSelectedRegion(region);
                                     setAddEditOpen(true);
                                   }}
                                 >
@@ -372,7 +266,7 @@ function Categories() {
                                     textTransform: "none",
                                   }}
                                   onClick={() => {
-                                    setSelectedCategory(category);
+                                    setSelectedRegion(region);
                                     setDeleteOpen(true);
                                   }}
                                 >
@@ -410,21 +304,18 @@ function Categories() {
         setOpen={setAddEditOpen}
         style={{ backgroundColor: "white" }}
       >
-        <AddEditCategory
-          category={selectedCategory}
-          handleSubmit={handleSubmit}
-        />
+        <AddEditRegion region={selectedRegion} handleSubmit={handleSubmit} />
       </PopUp>
       <DeletePopUp
-        content={`Voulez-vous vraiment supprimer la catégorie ${selectedCategory?.name}`}
-        title={"Supprimer la catégorie"}
+        content={`Voulez-vous vraiment supprimer la region ${selectedRegion?.name}`}
+        title={"Supprimer la region"}
         open={deleteOpen}
         setOpen={setDeleteOpen}
-        onClick={handleDeleteCategory}
+        onClick={handleDeleteRegion}
       />
       <PopUp open={addSuccessOpen} setOpen={setAddSuccessPopUp}>
         <AddSuccessPopUp
-          title={"Catégorie ajoutée avec succès"}
+          title={"Region ajoutée avec succès"}
           onClick={() => {
             setAddSuccessPopUp(false);
             setAddEditOpen(false);
@@ -433,7 +324,7 @@ function Categories() {
       </PopUp>
       <PopUp open={updateSuccessOpen} setOpen={setUpdateSuccessOpen}>
         <AddSuccessPopUp
-          title={"Catégorie modifiée avec succès"}
+          title={"Region modifiée avec succès"}
           onClick={() => {
             setUpdateSuccessOpen(false);
             setAddEditOpen(false);
@@ -442,17 +333,15 @@ function Categories() {
       </PopUp>
       <PopUp open={deleteSuccessOpen} setOpen={setDeleteSuccessOpen}>
         <AddSuccessPopUp
-          title={"Catégorie supprimée avec succès"}
+          title={"Region supprimée avec succès"}
           onClick={() => setDeleteOpen(false)}
         />
       </PopUp>
       <LoadingOverlay
-        open={
-          addCategoryLoading || udpateCategoryLoading || deleteCategoryLoading
-        }
+        open={addRegionLoading || udpateRegionLoading || deleteRegionLoading}
       />
     </Box>
   );
 }
 
-export default Categories;
+export default Regions;

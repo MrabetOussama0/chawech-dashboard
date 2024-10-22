@@ -23,6 +23,7 @@ import {
   YAxis,
 } from "recharts";
 import { toast } from "react-toastify";
+import Regions from "./Regions";
 
 const StatCard = ({ title, Icon, value, color }) => {
   return (
@@ -61,11 +62,14 @@ function Home() {
   const { homeData, error } = useSelector((state) => state.home);
 
   useEffect(() => {
-    try {
-      dispatch(getHomeData());
-    } catch (error) {
-      toast.error(error.message);
-    }
+    const fetchHomeData = async () => {
+      try {
+        await dispatch(getHomeData());
+      } catch (error) {
+        toast.error(error.message);
+      }
+    };
+    fetchHomeData();
   }, [dispatch]);
 
   return (
@@ -162,6 +166,9 @@ function Home() {
                 </ResponsiveContainer>
                 <ResponsiveContainer height={300}>
                   <Categories />
+                </ResponsiveContainer>
+                <ResponsiveContainer height={300}>
+                  <Regions />
                 </ResponsiveContainer>
               </Box>
             </Box>

@@ -78,7 +78,7 @@ function Footer() {
               letterSpacing: "2px",
             }}
           >
-            Chawech
+            Sarbini
           </Typography>
         </Box>
         <Box
@@ -97,15 +97,15 @@ function Footer() {
               padding: "0 20px",
             }}
           >
-            Chawech est une application mobile innovante en Tunisie, conçue pour
+            Sarbini est une application mobile innovante en Tunisie, conçue pour
             simplifier la commande de repas et desserts pour les utilisateurs
             situés sur l'avenue Mohamed V et à la Cité de la Culture à Tunis.
-            Avec une interface intuitive, Chawech permet aux utilisateurs de
+            Avec une interface intuitive, Sarbini permet aux utilisateurs de
             parcourir une large sélection de plats, de passer commande en
             quelques clics et de choisir entre la livraison rapide ou le retrait
             en personne. L'application offre également un suivi en temps réel
             des commandes, garantissant une expérience fluide et personnalisée.
-            Chawech transforme votre manière de commander, en rendant chaque
+            Sarbini transforme votre manière de commander, en rendant chaque
             repas plus accessible et pratique.
           </Typography>
           <Box
@@ -141,7 +141,7 @@ function Footer() {
             width: "100%",
           }}
         >
-          Chawech @ 2024. All rights reserved.
+          Sarbini @ 2024. All rights reserved.
         </Typography>
       </Box>
     </Box>

@@ -62,9 +62,9 @@ const About = () => {
               width: "70%",
             }}
           >
-            Chawech est une application mobile qui permet aux utilisateurs de
+            Sarbini est une application mobile qui permet aux utilisateurs de
             l'avenue Mohamed V et de la Cité de la Culture à Tunis de commander
-            facilement des repas et des desserts. Avec Chawech, profitez d'un
+            facilement des repas et des desserts. Avec Sarbini, profitez d'un
             service rapide et pratique adapté à vos besoins.
           </Typography>
         </Box>

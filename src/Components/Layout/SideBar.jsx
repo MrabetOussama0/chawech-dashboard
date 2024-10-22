@@ -1,11 +1,13 @@
+import {
+  LocalShippingOutlined,
+} from "@mui/icons-material";
 import { Box, List, ListItem, Typography } from "@mui/material";
 import logo from "Images/logo.png";
-import React, { useEffect } from "react";
+import React from "react";
 import {
   BsShop,
   BsGrid1X2,
   BsMenuButtonWide,
-  BsGear,
   BsPeople,
   BsPerson,
 } from "react-icons/bs";
@@ -30,6 +32,11 @@ function Sidebar({ openSidebarToggle }) {
       title: "Traiteurs",
       icon: <BsPeople fontSize={"20px"} />,
       link: "/managers",
+    },
+    {
+      title: "Livreurs",
+      icon: <LocalShippingOutlined height={"20px"} />,
+      link: "/deliverers",
     },
     {
       title: "Rapports",
@@ -77,7 +84,7 @@ function Sidebar({ openSidebarToggle }) {
             display: !openSidebarToggle && "none",
           }}
         >
-          Chawech
+          Sarbini
         </Typography>
       </Box>
       <List

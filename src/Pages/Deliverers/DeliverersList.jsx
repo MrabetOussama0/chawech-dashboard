@@ -16,14 +16,17 @@ import { useDispatch, useSelector } from "react-redux";
 import LoadingScreen from "Components/LoadingScreen";
 import ErrorScreen from "Components/ErrorScreen";
 import Builder from "Components/Builder";
-import { deleteManager, getManagers } from "States/Actions/ManagersActions";
+import {
+  deleteDeliverer,
+  getDeliverers,
+} from "States/Actions/DeliverersActions";
 import DeletePopUp from "Components/DeletePopUp";
 import { toast } from "react-toastify";
 import LoadingOverlay from "Components/LoadingOverlay";
 import AddSuccessPopUp from "Components/AddSuccessPopUp";
 import PopUp from "Components/Popup";
 
-const ManagerRow = ({ manager, setDeleteOpen, setSelectedManager }) => {
+const DelivererRow = ({ deliverer, setDeleteOpen, setSelectedDeliverer }) => {
   const navigate = useNavigate();
   return (
     <TableRow
@@ -31,11 +34,10 @@ const ManagerRow = ({ manager, setDeleteOpen, setSelectedManager }) => {
         "&:last-child td, &:last-child th": { border: 0 },
       }}
     >
-      <TableCell>{manager.manager.last_name}</TableCell>
-      <TableCell>{manager.manager.first_name}</TableCell>
-      <TableCell>{manager.manager.email}</TableCell>
-      <TableCell>{manager.manager.phone}</TableCell>
-      <TableCell>{manager.shop ? manager.shop.name : "-"}</TableCell>
+      <TableCell>{deliverer.last_name}</TableCell>
+      <TableCell>{deliverer.first_name}</TableCell>
+      <TableCell>{deliverer.email}</TableCell>
+      <TableCell>{deliverer.phone}</TableCell>
       <TableCell
         sx={{
           display: "flex",
@@ -52,7 +54,7 @@ const ManagerRow = ({ manager, setDeleteOpen, setSelectedManager }) => {
             borderColor: "tertiary.main",
             textTransform: "none",
           }}
-          onClick={() => navigate(`${manager.manager._id}/edit`)}
+          onClick={() => navigate(`${deliverer._id}/edit`)}
         >
           Modifier
         </Button>
@@ -64,7 +66,7 @@ const ManagerRow = ({ manager, setDeleteOpen, setSelectedManager }) => {
             textTransform: "none",
           }}
           onClick={() => {
-            setSelectedManager(manager.manager);
+            setSelectedDeliverer(deliverer);
             setDeleteOpen(true);
           }}
         >
@@ -75,28 +77,28 @@ const ManagerRow = ({ manager, setDeleteOpen, setSelectedManager }) => {
   );
 };
 
-const ManagersList = () => {
+const DeliverersList = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [deleteSuccessOpen, setDeleteSuccessOpen] = useState(false);
-  const [selectedManager, setSelectedManager] = useState({});
-  const { managers, getManagersLoading, error, deleteManagerLoading } =
-    useSelector((state) => state.managers);
+  const [selectedDeliverer, setSelectedDeliverer] = useState({});
+  const { deliverers, getDeliverersLoading, error, deleteDelivererLoading } =
+    useSelector((state) => state.deliverers);
   useEffect(() => {
-    const getManagersData = async () => {
+    const getDeliverersData = async () => {
       try {
-        await dispatch(getManagers());
+        await dispatch(getDeliverers());
       } catch (error) {
         toast.error(error.message);
       }
-    }
-    getManagersData();
+    };
+    getDeliverersData();
   }, [dispatch]);
   const handleDelete = async () => {
     try {
-      await dispatch(deleteManager(selectedManager._id));
-      setSelectedManager({});
+      await dispatch(deleteDeliverer(selectedDeliverer._id));
+      setSelectedDeliverer({});
       setDeleteSuccessOpen(true);
     } catch (error) {
       toast.error(error.message);
@@ -107,7 +109,7 @@ const ManagersList = () => {
     <Box>
       <Builder
         builder={() => {
-          if (getManagersLoading) {
+          if (getDeliverersLoading) {
             return <LoadingScreen />;
           } else if (error) {
             return <ErrorScreen />;
@@ -122,7 +124,7 @@ const ManagersList = () => {
                   }}
                 >
                   <Typography variant="h4" fontWeight={"bold"}>
-                    Traiteurs
+                    Livreurs
                   </Typography>
 
                   <Button
@@ -136,9 +138,9 @@ const ManagersList = () => {
                       fontSize: "0.8rem",
                       textTransform: "none",
                     }}
-                    onClick={() => navigate("/managers/add")}
+                    onClick={() => navigate("/deliverers/add")}
                   >
-                    Ajouter un traiteur
+                    Ajouter un livreur
                   </Button>
                 </Box>
                 <Box
@@ -158,17 +160,16 @@ const ManagersList = () => {
                           <TableCell>Prénom</TableCell>
                           <TableCell>Email</TableCell>
                           <TableCell>Téléphone</TableCell>
-                          <TableCell>Boutique</TableCell>
                           <TableCell align="center">Actions</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {managers.map((manager) => (
-                          <ManagerRow
-                            key={manager.manager._id}
-                            manager={manager}
+                        {deliverers.map((deliverer) => (
+                          <DelivererRow
+                            key={deliverer._id}
+                            deliverer={deliverer}
                             setDeleteOpen={setDeleteOpen}
-                            setSelectedManager={setSelectedManager}
+                            setSelectedDeliverer={setSelectedDeliverer}
                           />
                         ))}
                       </TableBody>
@@ -181,23 +182,23 @@ const ManagersList = () => {
         }}
       />
       <DeletePopUp
-        content={"Voulez-vous vraiment supprimer ce traiteur ?"}
-        title={"Supprimer le traiteur"}
+        content={"Voulez-vous vraiment supprimer ce livreur ?"}
+        title={"Supprimer le livreur"}
         open={deleteOpen}
         setOpen={setDeleteOpen}
         onClick={() => handleDelete()}
       />
       <PopUp open={deleteSuccessOpen} setOpen={setDeleteSuccessOpen}>
         <AddSuccessPopUp
-          title={"Suppression de traiteur confirmée"}
+          title={"Suppression de livreur confirmée"}
           onClick={() => {
             setDeleteSuccessOpen(false);
           }}
         />
       </PopUp>
-      <LoadingOverlay open={deleteManagerLoading} />
+      <LoadingOverlay open={deleteDelivererLoading} />
     </Box>
   );
 };
 
-export default ManagersList;
+export default DeliverersList;

@@ -3,6 +3,7 @@ import React from "react";
 
 const ErrorScreen = ({
   text = "Une erreur s'est produite, veuillez réessayer plus tard",
+  sx = {},
 }) => {
   return (
     <Box
@@ -11,6 +12,7 @@ const ErrorScreen = ({
         justifyContent: "center",
         alignItems: "center",
         height: "80vh",
+        ...sx,
       }}
     >
       <Typography

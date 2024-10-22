@@ -28,7 +28,7 @@ function TopBar() {
           fontWeight: "600",
         }}
       >
-        Chawech
+        Sarbini
       </Typography>
       {/* Navigation */}
       <NavBar />
