@@ -44,6 +44,7 @@ const AlertsReducer = (state = initialState, action) => {
       };
     case GET_ALERTS_ERROR:
       return {
+        ...state,
         getAlertsLoading: false,
         error: action.payload.message,
         alerts: [],
@@ -81,9 +82,9 @@ const AlertsReducer = (state = initialState, action) => {
       };
     case ADD_ALERT_ERROR:
       return {
+        ...state,
         addAlertLoading: false,
         error: action.payload.message,
-        alerts: [],
       };
     case DELETE_ALERT:
       return {
@@ -99,9 +100,9 @@ const AlertsReducer = (state = initialState, action) => {
       };
     case DELETE_ALERT_ERROR:
       return {
+        ...state,
         deleteAlertLoading: false,
         error: action.payload.message,
-        alerts: [],
       };
     case UPDATE_ALERT:
       return {
@@ -119,9 +120,9 @@ const AlertsReducer = (state = initialState, action) => {
       };
     case UPDATE_ALERT_ERROR:
       return {
+        ...state,
         updateAlertLoading: false,
         error: action.payload.message,
-        alerts: [],
       };
     default:
       return state;

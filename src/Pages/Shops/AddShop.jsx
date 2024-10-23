@@ -77,6 +77,7 @@ const AddShop = () => {
         image: image,
         region: values.region,
       };
+      
       if (shopId) {
         await dispatch(updateShop(shopId, shop));
         setUpdateSuccessOpen(true);
@@ -101,12 +102,14 @@ const AddShop = () => {
               enableReinitialize={true}
               onSubmit={onSubmit}
               initialValues={{
-                name: shop?.name || "",
-                description: shop?.description || "",
-                manager: shop?.manager || managers[0]?.manager?._id || "",
-                address: shop?.address || "",
-                type: shop?.type || "restaurant",
-                region: shop?.region || regions[0]?._id || "",
+                name: shopId ? shop?.name : "",
+                description: shopId ? shop?.description : "",
+                manager: shopId
+                  ? shop?.manager
+                  : managers[0]?.manager?._id || "",
+                address: shopId ? shop?.address : "",
+                type: shopId ? shop?.type : "restaurant",
+                region: shopId ? shop?.region : regions[0]?._id || "",
               }}
               validationSchema={Yup.object({
                 name: Yup.string().required("Champ obligatoire"),

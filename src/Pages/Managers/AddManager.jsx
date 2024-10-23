@@ -32,6 +32,8 @@ const AddManager = () => {
   useEffect(() => {
     const getManagerData = async () => {
       try {
+        console.log("managerId", managerId);
+        
         if (managerId) {
           await dispatch(getManager(managerId));
         }
@@ -66,10 +68,10 @@ const AddManager = () => {
       enableReinitialize={true}
       onSubmit={onSubmit}
       initialValues={{
-        first_name: managerId && manager.manager.first_name || "",
-        last_name: managerId && manager.manager.last_name || "",
-        email: managerId && manager.manager.email || "",
-        phone: managerId && manager.manager.phone || "",
+        first_name: managerId ? manager?.manager.first_name : "",
+        last_name: managerId ? manager?.manager.last_name : "",
+        email: managerId ? manager?.manager.email : "",
+        phone: managerId ? manager?.manager.phone : "",
       }}
       // validationSchema={shopSchema}
       validateOnMount={true}

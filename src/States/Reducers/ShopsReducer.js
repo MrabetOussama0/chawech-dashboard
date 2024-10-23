@@ -44,6 +44,7 @@ const ShopsReducer = (state = initialState, action) => {
       };
     case GET_SHOPS_ERROR:
       return {
+        ...state,
         getShopsLoading: false,
         error: action.payload.message,
         shops: [],
@@ -63,6 +64,7 @@ const ShopsReducer = (state = initialState, action) => {
       };
     case GET_SHOP_ERROR:
       return {
+        ...state,
         getShopLoading: false,
         error: action.payload.message,
         shop: null,
@@ -81,9 +83,9 @@ const ShopsReducer = (state = initialState, action) => {
       };
     case ADD_SHOP_ERROR:
       return {
+        ...state,
         addShopLoading: false,
         error: action.payload.message,
-        shops: [],
       };
     case DELETE_SHOP:
       return {
@@ -99,9 +101,9 @@ const ShopsReducer = (state = initialState, action) => {
       };
     case DELETE_SHOP_ERROR:
       return {
+        ...state,
         deleteShopLoading: false,
         error: action.payload.message,
-        shops: [],
       };
     case UPDATE_SHOP:
       return {
@@ -119,9 +121,9 @@ const ShopsReducer = (state = initialState, action) => {
       };
     case UPDATE_SHOP_ERROR:
       return {
+        ...state,
         updateShopLoading: false,
         error: action.payload.message,
-        shops: [],
       };
     default:
       return state;

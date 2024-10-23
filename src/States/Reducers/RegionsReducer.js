@@ -44,6 +44,7 @@ const RegionsReducer = (state = initialState, action) => {
       };
     case GET_REGIONS_ERROR:
       return {
+        ...state,
         getRegionsLoading: false,
         error: action.payload.message,
         regions: [],
@@ -63,6 +64,7 @@ const RegionsReducer = (state = initialState, action) => {
       };
     case GET_REGION_ERROR:
       return {
+        ...state,
         getRegionLoading: false,
         error: action.payload.message,
         region: null,
@@ -81,9 +83,9 @@ const RegionsReducer = (state = initialState, action) => {
       };
     case ADD_REGION_ERROR:
       return {
+        ...state,
         addRegionLoading: false,
         error: action.payload.message,
-        regions: [],
       };
     case DELETE_REGION:
       return {
@@ -101,9 +103,9 @@ const RegionsReducer = (state = initialState, action) => {
       };
     case DELETE_REGION_ERROR:
       return {
+        ...state,
         deleteRegionLoading: false,
         error: action.payload.message,
-        regions: [],
       };
     case UPDATE_REGION:
       return {
@@ -123,9 +125,9 @@ const RegionsReducer = (state = initialState, action) => {
       };
     case UPDATE_REGION_ERROR:
       return {
+        ...state,
         updateRegionLoading: false,
         error: action.payload.message,
-        regions: [],
       };
     default:
       return state;

@@ -44,6 +44,7 @@ const DeliverersReducer = (state = initialState, action) => {
       };
     case GET_DELIVERERS_ERROR:
       return {
+        ...state,
         getDeliverersLoading: false,
         error: action.payload.message,
         deliverers: [],
@@ -63,6 +64,7 @@ const DeliverersReducer = (state = initialState, action) => {
       };
     case GET_DELIVERER_ERROR:
       return {
+        ...state,
         getDelivererLoading: false,
         error: action.payload.message,
         deliverer: null,
@@ -81,9 +83,9 @@ const DeliverersReducer = (state = initialState, action) => {
       };
     case ADD_DELIVERER_ERROR:
       return {
+        ...state,
         addDelivererLoading: false,
         error: action.payload.message,
-        deliverers: [],
       };
     case DELETE_DELIVERER:
       return {
@@ -101,9 +103,9 @@ const DeliverersReducer = (state = initialState, action) => {
       };
     case DELETE_DELIVERER_ERROR:
       return {
+        ...state,
         deleteDelivererLoading: false,
         error: action.payload.message,
-        deliverers: [],
       };
     case UPDATE_DELIVERER:
       return {
@@ -123,9 +125,9 @@ const DeliverersReducer = (state = initialState, action) => {
       };
     case UPDATE_DELIVERER_ERROR:
       return {
+        ...state,
         updateDelivererLoading: false,
         error: action.payload.message,
-        deliverers: [],
       };
     default:
       return state;

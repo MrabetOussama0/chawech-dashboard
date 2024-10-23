@@ -71,11 +71,11 @@ const AddDeliverer = () => {
       enableReinitialize={true}
       onSubmit={onSubmit}
       initialValues={{
-        first_name: (delivererId && deliverer?.first_name) || "",
-        last_name: (delivererId && deliverer?.last_name) || "",
-        email: (delivererId && deliverer?.email) || "",
-        phone: (delivererId && deliverer?.phone) || "",
-        region: (delivererId && deliverer?.region) || "",
+        first_name: delivererId ? deliverer?.first_name : "",
+        last_name: delivererId ? deliverer?.last_name : "",
+        email: delivererId ? deliverer?.email : "",
+        phone: delivererId ? deliverer?.phone : "",
+        region: delivererId ? deliverer?.region : "",
       }}
       validationSchema={Yup.object().shape({
         first_name: Yup.string().required("Prénom est requis"),

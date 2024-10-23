@@ -45,6 +45,7 @@ const ShopService = {
       formData.append("manager", data.manager);
       formData.append("address", data.address);
       formData.append("type", data.type);
+      formData.append("region", data.region);
       formData.append("image", data.image);
       const response = await axiosClient.post(addShopEndPoint, data, {
         headers: {
@@ -78,6 +79,7 @@ const ShopService = {
       formData.append("manager", data.manager);
       formData.append("address", data.address);
       formData.append("type", data.type);
+      formData.append("region", data.region);
       formData.append("image", data.image);
       const response = await axiosClient.put(updateShopEndPoint(id), formData, {
         headers: {

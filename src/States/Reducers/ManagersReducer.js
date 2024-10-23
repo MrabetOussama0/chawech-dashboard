@@ -44,6 +44,7 @@ const ManagersReducer = (state = initialState, action) => {
       };
     case GET_MANAGERS_ERROR:
       return {
+        ...state,
         getManagersLoading: false,
         error: action.payload.message,
         managers: [],
@@ -63,6 +64,7 @@ const ManagersReducer = (state = initialState, action) => {
       };
     case GET_MANAGER_ERROR:
       return {
+        ...state,
         getManagerLoading: false,
         error: action.payload.message,
         manager: null,
@@ -81,9 +83,9 @@ const ManagersReducer = (state = initialState, action) => {
       };
     case ADD_MANAGER_ERROR:
       return {
+        ...state,
         addManagerLoading: false,
         error: action.payload.message,
-        managers: [],
       };
     case DELETE_MANAGER:
       return {
@@ -101,9 +103,9 @@ const ManagersReducer = (state = initialState, action) => {
       };
     case DELETE_MANAGER_ERROR:
       return {
+        ...state,
         deleteManagerLoading: false,
         error: action.payload.message,
-        managers: [],
       };
     case UPDATE_MANAGER:
       return {
@@ -123,9 +125,9 @@ const ManagersReducer = (state = initialState, action) => {
       };
     case UPDATE_MANAGER_ERROR:
       return {
+        ...state,
         updateManagerLoading: false,
         error: action.payload.message,
-        managers: [],
       };
     default:
       return state;

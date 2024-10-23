@@ -44,6 +44,7 @@ const CategoriesReducer = (state = initialState, action) => {
       };
     case GET_CATEGORIES_ERROR:
       return {
+        ...state,
         getCategoriesLoading: false,
         error: action.payload.message,
         categories: [],
@@ -63,6 +64,7 @@ const CategoriesReducer = (state = initialState, action) => {
       };
     case GET_CATEGORY_ERROR:
       return {
+        ...state,
         getCategoryLoading: false,
         error: action.payload.message,
         category: null,
@@ -81,9 +83,9 @@ const CategoriesReducer = (state = initialState, action) => {
       };
     case ADD_CATEGORY_ERROR:
       return {
+        ...state,
         addCategoryLoading: false,
         error: action.payload.message,
-        categories: [],
       };
     case DELETE_CATEGORY:
       return {
@@ -101,9 +103,9 @@ const CategoriesReducer = (state = initialState, action) => {
       };
     case DELETE_CATEGORY_ERROR:
       return {
+        ...state,
         deleteCategoryLoading: false,
         error: action.payload.message,
-        categories: [],
       };
     case UPDATE_CATEGORY:
       return {
@@ -123,9 +125,9 @@ const CategoriesReducer = (state = initialState, action) => {
       };
     case UPDATE_CATEGORY_ERROR:
       return {
+        ...state,
         updateCategoryLoading: false,
         error: action.payload.message,
-        categories: [],
       };
     default:
       return state;
